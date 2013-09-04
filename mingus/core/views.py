@@ -8,9 +8,6 @@ from django.template import loader, Context
 from django_proxy.models import Proxy
 from basic.blog.models import Settings
 from view_cache_utils import cache_page_with_prefix
-from contact_form.views import contact_form as django_contact_form
-from contact_form.forms import ContactForm
-from honeypot.decorators import check_honeypot
 from tagging.models import Tag, TaggedItem
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -193,24 +190,6 @@ def tag_detail(request, slug, template_name='proxy/tag_detail.html', **kwargs):
                     {'tag': tag, 'object_list': results},
                     context_instance=RequestContext(request),
                     )
-
-@check_honeypot
-def contact_form(request, form_class=ContactForm,
-                 template_name='contact_form/contact_form.html'):
-
-    '''
-    Handles the contact form view. Leverages django-contact-form.
-
-    This is an example of overriding another reusable apps view. This particular
-    view also contains a form. For this example we are just doing the basic
-    implementation by wrapping the view function and simply passing the
-    arguments along.
-
-    This view is also leveraging another reusable app, django-honeypot. The
-    decorator you see being applied is used to protect your app from spam.
-    '''
-    return django_contact_form(request, form_class=form_class,
-                 template_name=template_name)
 
 
 # Stop Words courtesy of http://www.dcs.gla.ac.uk/idom/ir_resources/linguistic_utils/stop_words

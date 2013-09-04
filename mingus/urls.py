@@ -7,10 +7,10 @@ from basic.blog import views as blog_views
 from basic.blog.feeds import BlogPostsFeed, BlogPostsByCategory
 from basic.blog.sitemap import BlogSitemap
 from mingus.core.views import springsteen_results, springsteen_firehose, \
-                            home_list, springsteen_category, contact_form, \
-                            proxy_search
+                            home_list, springsteen_category, proxy_search
 from robots.views import rules_list
 from mingus.core.feeds import AllEntries, ByTag
+from contact_form import ContactForm
 
 admin.autodiscover()
 
@@ -51,10 +51,8 @@ urlpatterns += patterns('',
     (r'^api/springsteen/posts/$', springsteen_results),
     (r'^api/springsteen/firehose/$', springsteen_firehose),
     (r'^api/springsteen/category/(?P<slug>[-\w]+)/$', springsteen_category),
-    
-    url(r'^contact/$',
-        contact_form,
-        name='contact_form'),
+
+    url(r'^contact/$', ContactForm.as_view(), name='contact_form'),
 
     url(r'^contact/sent/$',
         direct_to_template,
